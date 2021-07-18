@@ -1,7 +1,7 @@
 {
-  "name": "@jupiterone/integration-template",
+  "name": "@jupiterone/graph-terraform-cloud",
   "version": "0.0.0",
-  "description": "A JupiterOne Integration",
+  "description": "A graph conversion tool for https://www.terraform.io/cloud",
   "license": "MPL-2.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -19,17 +19,23 @@
     "format": "prettier --write '**/*.{ts,js,json,css,md,yml}'",
     "type-check": "tsc",
     "test": "jest",
+    "test:env": "LOAD_ENV=1 yarn test",
     "test:ci": "yarn lint && yarn type-check && yarn test",
-    "build": "tsc -p tsconfig.dist.json --declaration",
-    "prepush": "yarn lint && yarn type-check && jest --changedSince master",
-    "prepack": "yarn build"
+    "build": "tsc -p tsconfig.dist.json --declaration && cp README.md dist/README.md",
+    "prepush": "yarn lint && yarn type-check && jest --changedSince master"
   },
   "peerDependencies": {
-    "@jupiterone/integration-sdk-core": "^5.11.0"
+    "@jupiterone/integration-sdk-core": "^6.11.0"
   },
   "devDependencies": {
-    "@jupiterone/integration-sdk-core": "^5.11.0",
-    "@jupiterone/integration-sdk-dev-tools": "^5.11.0",
-    "@jupiterone/integration-sdk-testing": "^5.11.0"
+    "@jupiterone/integration-sdk-core": "^6.11.0",
+    "@jupiterone/integration-sdk-dev-tools": "^6.11.0",
+    "@jupiterone/integration-sdk-testing": "^6.11.0",
+    "@types/node-fetch": "^2.5.11"
+  },
+  "dependencies": {
+    "@lifeomic/attempt": "^3.0.0",
+    "camelcase-keys": "^6",
+    "node-fetch": "^2.6.1"
   }
 }
