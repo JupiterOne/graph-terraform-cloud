@@ -91,9 +91,10 @@ https://github.com/JupiterOne/sdk/blob/master/docs/integrations/development.md
 
 The following entities are created:
 
-| Resources | Entity `_type` | Entity `_class` |
-| --------- | -------------- | --------------- |
-| Account   | `acme_account` | `Account`       |
+| Resources    | Entity `_type`     | Entity `_class`           |
+| ------------ | ------------------ | ------------------------- |
+| Organization | `tfe_organization` | `Account`, `Organization` |
+| User         | `tfe_user`         | `User`                    |
 
 ### Relationships
 
@@ -101,9 +102,7 @@ The following relationships are created/mapped:
 
 | Source Entity `_type` | Relationship `_class` | Target Entity `_type` |
 | --------------------- | --------------------- | --------------------- |
-| `acme_account`        | **HAS**               | `acme_group`          |
-| `acme_account`        | **HAS**               | `acme_user`           |
-| `acme_group`          | **HAS**               | `acme_user`           |
+| `tfe_organization`    | **HAS**               | `tfe_user`            |
 
 <!--
 ********************************************************************************
