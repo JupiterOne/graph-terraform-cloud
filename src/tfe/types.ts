@@ -93,3 +93,111 @@ export interface User {
   email?: string;
   permissions: Permissions;
 }
+
+export interface WorkspaceVCSRepo {
+  branch: string;
+  ingressSubmodules: boolean;
+  identifier: string;
+  displayIdentifier: string;
+  githubAppInstallationId: string;
+  repositoryHttpUrl: string;
+  serviceProvider: string;
+}
+
+export interface WorkspacePermissions {
+  canUpdate: boolean;
+  canDestroy: boolean;
+  canQueueDestroy: boolean;
+  canQueueRun: boolean;
+  canQueueApply: boolean;
+  canReadStateVersions: boolean;
+  canCreateStateVersions: boolean;
+  canReadVariable: boolean;
+  canUpdateVariable: boolean;
+  canLock: boolean;
+  canUnlock: boolean;
+  canForceUnlock: boolean;
+  canReadSettings: boolean;
+  canManageTags: boolean;
+}
+
+export interface WorkspaceActions {
+  isDestroyable: boolean;
+}
+
+export interface Workspace {
+  allowDestroyPlan: boolean;
+  autoApply: boolean;
+  autoDestroyAt: string | null;
+  createdAt: string;
+  environment: string;
+  locked: boolean;
+  name: string;
+  queueAllRuns: boolean;
+  speculativeEnabled: boolean;
+  structuredRunOutputEnabled: boolean;
+  terraformVersion: string;
+  workingDirectory: string;
+  globalRemoteState: boolean;
+  updatedAt: string;
+  resourceCount: number;
+  applyDurationAverage: number;
+  planDurationAverage: number;
+  policyCheckFailures: string | null;
+  runFailures: number;
+  workspaceKpisRunsCount: number;
+  latestChangeAt: string;
+  operations: boolean;
+  executionMode: string;
+  vcsRepo: WorkspaceVCSRepo;
+  vcsRepoIdentifier: string;
+  permissions: WorkspacePermissions;
+  actions: WorkspaceActions;
+  description: string;
+  fileTriggersEnabled: boolean;
+  source: string;
+  sourceName: string | null;
+  sourceUrl: string | null;
+  triggerPrefixes: string[];
+}
+
+export interface Run {
+  actions: {
+    isCancelable: boolean;
+    isConfirmable: boolean;
+    isDiscardable: boolean;
+    isForceCancelable: boolean;
+  };
+  canceledAt: string | null;
+  createdAt: string;
+  hasChanges: boolean;
+  isDestroy: boolean;
+  message: string;
+  planOnly: boolean;
+  refresh: boolean;
+  refreshOnly: boolean;
+  replaceAddrs: string | null;
+  source: string;
+  statusTimestamps: {
+    appliedAt: string;
+    plannedAt: string;
+    applyingAt: string;
+    planningAt: string;
+    confirmedAt: string;
+    planQueuedAt: string;
+    applyQueuedAt: string;
+    planQueueableAt: string;
+  };
+  status: string;
+  targetAddrs: string | null;
+  triggerReason: string;
+  permissions: {
+    canApply: boolean;
+    canCancel: boolean;
+    canComment: boolean;
+    canDiscard: boolean;
+    canForceExecute: boolean;
+    canForceCancel: boolean;
+    canOverridePolicyCheck: boolean;
+  };
+}

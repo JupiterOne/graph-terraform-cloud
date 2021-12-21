@@ -95,6 +95,7 @@ The following entities are created:
 | ------------ | ------------------ | ------------------------- |
 | Organization | `tfe_organization` | `Account`, `Organization` |
 | User         | `tfe_user`         | `User`                    |
+| Workspace    | `tfe_workspace`    | `Project`                 |
 
 ### Relationships
 
@@ -103,6 +104,7 @@ The following relationships are created/mapped:
 | Source Entity `_type` | Relationship `_class` | Target Entity `_type` |
 | --------------------- | --------------------- | --------------------- |
 | `tfe_organization`    | **HAS**               | `tfe_user`            |
+| `tfe_organization`    | **HAS**               | `tfe_workspace`       |
 
 <!--
 ********************************************************************************

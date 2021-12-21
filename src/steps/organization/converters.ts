@@ -2,7 +2,7 @@ import {
   createIntegrationEntity,
   parseTimePropertyValue,
 } from '@jupiterone/integration-sdk-core';
-import { Organization } from '../../tfe/types';
+import { Organization, Workspace } from '../../tfe/types';
 import { User } from '../../tfe/types';
 import { prefixObjProperties } from '../../util/properties';
 import { Entities } from '../constants';
@@ -63,6 +63,54 @@ export function createOrganizationMemberEntity({
         email: userData.email,
         ...(userData.permissions &&
           prefixObjProperties('permissions', userData.permissions)),
+      },
+    },
+  });
+}
+
+export function createOrganizationWorkspaceEntity(
+  workspaceId: string,
+  data: Workspace,
+) {
+  return createIntegrationEntity({
+    entityData: {
+      source: data,
+      assign: {
+        _key: workspaceId,
+        _class: Entities.WORKSPACE._class,
+        _type: Entities.WORKSPACE._type,
+        createdOn: parseTimePropertyValue(data.createdAt),
+        updatedOn: parseTimePropertyValue(data.updatedAt),
+        latestChangeAt: parseTimePropertyValue(data.latestChangeAt),
+        id: workspaceId,
+        name: data.name,
+        description: data.description || undefined,
+        allowDestroyPlan: data.allowDestroyPlan,
+        autoApply: data.autoApply,
+        createdAt: data.createdAt,
+        environment: data.environment,
+        locked: data.locked,
+        queueAllRuns: data.queueAllRuns,
+        speculativeEnabled: data.speculativeEnabled,
+        structuredRunOutputEnabled: data.structuredRunOutputEnabled,
+        terraformVersion: data.terraformVersion,
+        workingDirectory: data.workingDirectory,
+        globalRemoteState: data.globalRemoteState,
+        resourceCount: data.resourceCount,
+        applyDurationAverage: data.applyDurationAverage,
+        planDurationAverage: data.planDurationAverage,
+        runFailures: data.runFailures,
+        workspaceKpisRunsCount: data.workspaceKpisRunsCount,
+        operations: data.operations,
+        executionMode: data.executionMode,
+        vcsRepoIdentifier: data.vcsRepoIdentifier,
+        fileTriggersEnabled: data.fileTriggersEnabled,
+        source: data.source,
+        webLink: `https://app.terraform.io/app/${data.name}/workspaces/${data.name}`,
+        ...(data.permissions &&
+          prefixObjProperties('permissions', data.permissions)),
+        ...(data.vcsRepo && prefixObjProperties('vcsRepo', data.vcsRepo)),
+        ...(data.actions && prefixObjProperties('vcsRepo', data.actions)),
       },
     },
   });

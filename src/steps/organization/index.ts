@@ -3,6 +3,7 @@ import {
   Entity,
   IntegrationStep,
   IntegrationStepExecutionContext,
+  JobState,
   RelationshipClass,
 } from '@jupiterone/integration-sdk-core';
 import { TerraformCloudClient } from '../../tfe/client';
@@ -11,6 +12,7 @@ import { Entities, IntegrationSteps, Relationships } from '../constants';
 import {
   createOrganizationEntity,
   createOrganizationMemberEntity,
+  createOrganizationWorkspaceEntity,
 } from './converters';
 import {
   CachedOrganizationData,
@@ -18,6 +20,29 @@ import {
   forEachOrganization,
 } from '../../util/jobState';
 import { User } from '../../tfe/types';
+
+async function createOrganizationHasResourceRelationship({
+  jobState,
+  organizationExternalId,
+  targetEntity,
+  properties,
+}: {
+  jobState: JobState;
+  organizationExternalId: string;
+  targetEntity: Entity;
+  properties?: any;
+}) {
+  await jobState.addRelationship(
+    createDirectRelationship({
+      _class: RelationshipClass.HAS,
+      fromKey: organizationExternalId,
+      toKey: targetEntity._key,
+      fromType: Entities.ORGANIZATION._type,
+      toType: targetEntity._type,
+      properties,
+    }),
+  );
+}
 
 export async function fetchOrganizations({
   instance: { config },
@@ -93,18 +118,14 @@ export async function fetchOrganizationMembers({
                 userEntityToUserEntityKeyMap.set(userEntity._key, userEntity);
               }
 
-              await jobState.addRelationship(
-                createDirectRelationship({
-                  _class: RelationshipClass.HAS,
-                  fromKey: organizationExternalId,
-                  toKey: userEntity._key,
-                  fromType: Entities.ORGANIZATION._type,
-                  toType: Entities.USER._type,
-                  properties: {
-                    status: item.attributes.status,
-                  },
-                }),
-              );
+              await createOrganizationHasResourceRelationship({
+                jobState,
+                organizationExternalId,
+                targetEntity: userEntity,
+                properties: {
+                  status: item.attributes.status,
+                },
+              });
             }
           }
         },
@@ -113,23 +134,34 @@ export async function fetchOrganizationMembers({
   );
 }
 
-// export async function fetchOrganizationOAuthTokens({
-//   instance: { config },
-//   jobState,
-// }: IntegrationStepExecutionContext<IntegrationConfig>) {
-//   const { apiKey } = config;
-//   const client = new TerraformCloudClient({ apiKey });
+export async function fetchOrganizationWorkspaces({
+  instance: { config },
+  jobState,
+}: IntegrationStepExecutionContext<IntegrationConfig>) {
+  const { apiKey } = config;
+  const client = new TerraformCloudClient({ apiKey });
 
-//   await forEachOrganization(jobState, async ({ organizationName }) => {
-//     await client.organizations.iterateOrganizationOAuthTokens(
-//       organizationName,
-//       async (data) => {
-//         // TODO: Implement converter for this
-//         return Promise.resolve();
-//       }
-//     );
-//   });
-// }
+  await forEachOrganization(
+    jobState,
+    async ({ organizationExternalId, organizationName }) => {
+      await client.organizations.iterateWorkspaces(
+        organizationName,
+        async (data) => {
+          await createOrganizationHasResourceRelationship({
+            jobState,
+            organizationExternalId,
+            targetEntity: await jobState.addEntity(
+              createOrganizationWorkspaceEntity(
+                data.item.id,
+                data.item.attributes,
+              ),
+            ),
+          });
+        },
+      );
+    },
+  );
+}
 
 export const organizationSteps: IntegrationStep<IntegrationConfig>[] = [
   {
@@ -148,12 +180,12 @@ export const organizationSteps: IntegrationStep<IntegrationConfig>[] = [
     dependsOn: [IntegrationSteps.ORGANIZATIONS],
     executionHandler: fetchOrganizationMembers,
   },
-  // {
-  //   id: IntegrationSteps.ORGANIZATION_OAUTH_TOKENS,
-  //   name: 'Fetch Organization OAuth Tokens',
-  //   entities: [],
-  //   relationships: [],
-  //   dependsOn: [IntegrationSteps.ORGANIZATIONS],
-  //   executionHandler: fetchOrganizationOAuthTokens,
-  // },
+  {
+    id: IntegrationSteps.WORKSPACES,
+    name: 'Fetch Organization Workspaces',
+    entities: [Entities.WORKSPACE],
+    relationships: [Relationships.ORGANIZATION_HAS_WORKSPACE],
+    dependsOn: [IntegrationSteps.ORGANIZATIONS],
+    executionHandler: fetchOrganizationWorkspaces,
+  },
 ];

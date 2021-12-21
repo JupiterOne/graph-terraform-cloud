@@ -13,9 +13,14 @@ export enum IntegrationSteps {
   ORGANIZATIONS = 'fetch-organizations',
   ORGANIZATION_MEMBERS = 'fetch-organization-members',
   ORGANIZATION_OAUTH_TOKENS = 'fetch-organization-oauth-tokens',
+  WORKSPACES = 'fetch-organization-workspaces',
+  RUNS = 'fetch-workspace-runs',
 }
 
-export const Entities: Record<'ORGANIZATION' | 'USER', StepEntityMetadata> = {
+export const Entities: Record<
+  'ORGANIZATION' | 'USER' | 'WORKSPACE' | 'RUN',
+  StepEntityMetadata
+> = {
   ORGANIZATION: {
     _type: 'tfe_organization',
     _class: ['Account', 'Organization'],
@@ -26,10 +31,20 @@ export const Entities: Record<'ORGANIZATION' | 'USER', StepEntityMetadata> = {
     _class: ['User'],
     resourceName: 'User',
   },
+  WORKSPACE: {
+    _type: 'tfe_workspace',
+    _class: ['Project'],
+    resourceName: 'Workspace',
+  },
+  RUN: {
+    _type: 'tfe_run',
+    _class: ['CodeDeploy'],
+    resourceName: 'Run',
+  },
 };
 
 export const Relationships: Record<
-  'ORGANIZATION_HAS_USER',
+  'ORGANIZATION_HAS_USER' | 'ORGANIZATION_HAS_WORKSPACE',
   StepRelationshipMetadata
 > = {
   ORGANIZATION_HAS_USER: {
@@ -37,5 +52,11 @@ export const Relationships: Record<
     _class: RelationshipClass.HAS,
     sourceType: Entities.ORGANIZATION._type,
     targetType: Entities.USER._type,
+  },
+  ORGANIZATION_HAS_WORKSPACE: {
+    _type: 'tfe_organization_has_workspace',
+    _class: RelationshipClass.HAS,
+    sourceType: Entities.ORGANIZATION._type,
+    targetType: Entities.WORKSPACE._type,
   },
 };

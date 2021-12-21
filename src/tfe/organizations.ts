@@ -6,6 +6,7 @@ import {
   CreateOrganizationRequestBodyAttributes,
   Organization,
   OrganizationMembership,
+  Workspace,
 } from './types';
 
 export class Organizations extends TerraformCloudClientRequestor {
@@ -59,6 +60,21 @@ export class Organizations extends TerraformCloudClientRequestor {
       {
         method: 'GET',
         path: `/api/v2/organizations`,
+      },
+      callback,
+    );
+  }
+
+  async iterateWorkspaces(
+    organizationName: string,
+    callback: (
+      workspace: IterateListApiDataResponse<Workspace>,
+    ) => Promise<void>,
+  ) {
+    await this.iterateListApiData<Workspace>(
+      {
+        method: 'GET',
+        path: `/api/v2/organizations/${organizationName}/workspaces`,
       },
       callback,
     );
