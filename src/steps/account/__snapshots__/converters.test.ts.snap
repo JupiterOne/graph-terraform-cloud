@@ -1,0 +1,45 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`#createAccountEntity should convert to entity 1`] = `
+Object {
+  "_class": Array [
+    "User",
+  ],
+  "_key": "account-user-TSVGDCJGAZZZZZZ",
+  "_rawData": Array [
+    Object {
+      "name": "default",
+      "rawData": Object {
+        "avatarUrl": "https://www.gravatar.com/avatar/c726702df6456d9affb1eb8d9d37a9de?s=100&d=mm",
+        "email": "api-org-test@hashicorp.com",
+        "enterpriseSupport": false,
+        "hasGitHubAppToken": false,
+        "id": "user-TSVGDCJGAZZZZZZ",
+        "isConfirmed": true,
+        "isServiceAccount": true,
+        "isSiteAdmin": false,
+        "isSsoLogin": false,
+        "isSudo": false,
+        "permissions": Object {
+          "canChangeEmail": true,
+          "canChangeUsername": true,
+          "canCreateOrganizations": false,
+          "canManageUserTokens": false,
+        },
+        "twoFactor": Object {
+          "enabled": false,
+          "verified": false,
+        },
+        "username": "api-org-test",
+      },
+    },
+  ],
+  "_type": "tfe_account",
+  "createdOn": undefined,
+  "displayName": "api-org-test",
+  "email": "api-org-test@hashicorp.com",
+  "id": "user-TSVGDCJGAZZZZZZ",
+  "name": "api-org-test",
+  "username": "api-org-test",
+}
+`;

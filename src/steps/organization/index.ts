@@ -7,10 +7,19 @@ import {
 } from '@jupiterone/integration-sdk-core';
 import { TerraformCloudClient } from '../../tfe/client';
 import { IntegrationConfig } from '../../config';
-import { Entities, IntegrationSteps, Relationships } from '../constants';
 import {
+  ACCOUNT_ENTITY_KEY,
+  Entities,
+  IntegrationSteps,
+  Relationships,
+} from '../constants';
+import {
+  createOrganizationEntitlementSetEntity,
   createOrganizationEntity,
   createOrganizationMemberEntity,
+  createOrganizationTeamEntity,
+  createOrganizationWorkspaceEntity,
+  generateEntitlementSetKey,
 } from './converters';
 import {
   CachedOrganizationData,
@@ -29,11 +38,22 @@ export async function fetchOrganizations({
   const organizationData: CachedOrganizationData[] = [];
 
   await client.organizations.iterateOrganizations(async ({ item }) => {
-    await jobState.addEntity(createOrganizationEntity(item.attributes));
+    const organizationEntity = createOrganizationEntity(item.attributes);
+    await jobState.addEntity(organizationEntity);
     organizationData.push({
       organizationName: item.attributes.name,
       organizationExternalId: item.attributes.externalId,
     });
+
+    const accountEntity = await jobState.getData(ACCOUNT_ENTITY_KEY);
+
+    await jobState.addRelationship(
+      createDirectRelationship({
+        _class: RelationshipClass.HAS,
+        to: organizationEntity,
+        from: accountEntity as Entity,
+      }),
+    );
   });
 
   await cacheOrganizationData(jobState, organizationData);
@@ -113,6 +133,111 @@ export async function fetchOrganizationMembers({
   );
 }
 
+export async function fetchOrganizationWorkspaces({
+  instance: { config },
+  jobState,
+}: IntegrationStepExecutionContext<IntegrationConfig>) {
+  const { apiKey } = config;
+  const client = new TerraformCloudClient({ apiKey });
+
+  await forEachOrganization(
+    jobState,
+    async ({ organizationExternalId, organizationName }) => {
+      await client.organizations.iterateOrganizationWorkspaces(
+        organizationName,
+        async ({ item }) => {
+          const workspaceEntity = createOrganizationWorkspaceEntity(
+            item.id,
+            item.attributes,
+          );
+          await jobState.addEntity(workspaceEntity);
+
+          await jobState.addRelationship(
+            createDirectRelationship({
+              _class: RelationshipClass.HAS,
+              fromKey: organizationExternalId,
+              toKey: workspaceEntity._key,
+              fromType: Entities.ORGANIZATION._type,
+              toType: Entities.WORKSPACE._type,
+            }),
+          );
+        },
+      );
+    },
+  );
+}
+
+export async function fetchOrganizationEntitlementSet({
+  instance: { config },
+  jobState,
+}: IntegrationStepExecutionContext<IntegrationConfig>) {
+  const { apiKey } = config;
+  const client = new TerraformCloudClient({ apiKey });
+
+  await forEachOrganization(
+    jobState,
+    async ({ organizationExternalId, organizationName }) => {
+      const entitlementSetEntity = createOrganizationEntitlementSetEntity(
+        organizationName,
+        await client.organizations.requestOrganizationEntitlementSet(
+          organizationName,
+        ),
+      );
+      await jobState.addEntity(entitlementSetEntity);
+
+      await jobState.addRelationship(
+        createDirectRelationship({
+          _class: RelationshipClass.HAS,
+          fromKey: organizationExternalId,
+          toKey: entitlementSetEntity._key,
+          fromType: Entities.ORGANIZATION._type,
+          toType: Entities.ENTITLEMENT_SET._type,
+        }),
+      );
+    },
+  );
+}
+
+export async function fetchOrganizationTeams({
+  instance: { config },
+  jobState,
+}: IntegrationStepExecutionContext<IntegrationConfig>) {
+  const { apiKey } = config;
+  const client = new TerraformCloudClient({ apiKey });
+
+  await forEachOrganization(
+    jobState,
+    async ({ organizationExternalId, organizationName }) => {
+      const entitlementSetEntity = await jobState.findEntity(
+        generateEntitlementSetKey(organizationName),
+      );
+
+      if (entitlementSetEntity?.teams) {
+        await client.organizations.iterateOrganizationTeams(
+          organizationName,
+          async ({ item }) => {
+            const teamEntity = createOrganizationTeamEntity(
+              item.id,
+              item.attributes,
+            );
+            await jobState.addEntity(teamEntity);
+
+            await jobState.addRelationship(
+              createDirectRelationship({
+                _class: RelationshipClass.HAS,
+                fromKey: organizationExternalId,
+                toKey: teamEntity._key,
+                fromType: Entities.ORGANIZATION._type,
+                toType: Entities.TEAM._type,
+              }),
+            );
+          },
+        );
+      }
+    },
+  );
+}
+
 // export async function fetchOrganizationOAuthTokens({
 //   instance: { config },
 //   jobState,
@@ -136,8 +261,8 @@ export const organizationSteps: IntegrationStep<IntegrationConfig>[] = [
     id: IntegrationSteps.ORGANIZATIONS,
     name: 'Fetch Organization Details',
     entities: [Entities.ORGANIZATION],
-    relationships: [],
-    dependsOn: [],
+    relationships: [Relationships.ACCOUNT_HAS_ORGANIZATION],
+    dependsOn: [IntegrationSteps.ACCOUNT],
     executionHandler: fetchOrganizations,
   },
   {
@@ -147,6 +272,33 @@ export const organizationSteps: IntegrationStep<IntegrationConfig>[] = [
     relationships: [Relationships.ORGANIZATION_HAS_USER],
     dependsOn: [IntegrationSteps.ORGANIZATIONS],
     executionHandler: fetchOrganizationMembers,
+  },
+  {
+    id: IntegrationSteps.ORGANIZATION_WORKSPACES,
+    name: 'Fetch Organization Workspaces',
+    entities: [Entities.WORKSPACE],
+    relationships: [Relationships.ORGANIZATION_HAS_WORKSPACE],
+    dependsOn: [IntegrationSteps.ORGANIZATIONS],
+    executionHandler: fetchOrganizationWorkspaces,
+  },
+  {
+    id: IntegrationSteps.ORGANIZATION_ENTITLEMENT_SET,
+    name: 'Fetch Organization Entitlement Set',
+    entities: [Entities.ENTITLEMENT_SET],
+    relationships: [Relationships.ORGANIZATION_HAS_ENTITLEMENT_SET],
+    dependsOn: [IntegrationSteps.ORGANIZATIONS],
+    executionHandler: fetchOrganizationEntitlementSet,
+  },
+  {
+    id: IntegrationSteps.ORGANIZATION_TEAMS,
+    name: 'Fetch Organization Teams',
+    entities: [Entities.TEAM],
+    relationships: [Relationships.ORGANIZATION_HAS_TEAM],
+    dependsOn: [
+      IntegrationSteps.ORGANIZATIONS,
+      IntegrationSteps.ORGANIZATION_ENTITLEMENT_SET,
+    ],
+    executionHandler: fetchOrganizationTeams,
   },
   // {
   //   id: IntegrationSteps.ORGANIZATION_OAUTH_TOKENS,

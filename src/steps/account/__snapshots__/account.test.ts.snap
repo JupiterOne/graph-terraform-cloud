@@ -1,0 +1,57 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`#fetchAccount should collect data: jobState 1`] = `
+Object {
+  "collectedEntities": Array [
+    Object {
+      "_class": Array [
+        "User",
+      ],
+      "_key": "account-user-2yZJWZGNJmNsidGK",
+      "_rawData": Array [
+        Object {
+          "name": "default",
+          "rawData": Object {
+            "avatarUrl": "https://www.gravatar.com/avatar/6bf8d79d3b1d6d34a9d69f62cd09d20a?s=100&d=mm",
+            "email": "pgilaga@gmail.com",
+            "enterpriseSupport": false,
+            "hasGitHubAppToken": false,
+            "id": "user-2yZJWZGNJmNsidGK",
+            "isConfirmed": true,
+            "isServiceAccount": false,
+            "isSiteAdmin": false,
+            "isSsoLogin": false,
+            "isSudo": false,
+            "password": null,
+            "permissions": Object {
+              "canChangeEmail": true,
+              "canChangeUsername": true,
+              "canCreateOrganizations": true,
+              "canManageUserTokens": true,
+            },
+            "twoFactor": Object {
+              "enabled": false,
+              "verified": false,
+            },
+            "unconfirmedEmail": null,
+            "username": "pgilaga",
+          },
+        },
+      ],
+      "_type": "tfe_account",
+      "createdOn": undefined,
+      "displayName": "pgilaga",
+      "email": "pgilaga@gmail.com",
+      "id": "user-2yZJWZGNJmNsidGK",
+      "name": "pgilaga",
+      "username": "pgilaga",
+    },
+  ],
+  "collectedRelationships": Array [],
+  "encounteredTypes": Array [
+    "tfe_account",
+  ],
+  "numCollectedEntities": 1,
+  "numCollectedRelationships": 0,
+}
+`;

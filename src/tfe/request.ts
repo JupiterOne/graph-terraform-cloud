@@ -258,7 +258,10 @@ export class TerraformCloudClientRequestor {
     });
 
     const result = (await response.json()) as JsonApiResponse<T>;
-    return camelcaseKeys(result.data.attributes, { deep: true });
+    return camelcaseKeys(
+      { id: result.data.id, ...result.data.attributes },
+      { deep: true },
+    );
   }
 
   async deleteRequest<T>({

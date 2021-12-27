@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`#createWorkspaceResourceEntity should convert to entity 1`] = `
+Object {
+  "_class": Array [
+    "Resource",
+  ],
+  "_key": "resource-id",
+  "_rawData": Array [
+    Object {
+      "name": "default",
+      "rawData": Object {
+        "address": "google_bigquery_dataset.dataset",
+        "createdAt": "2021-06-24",
+        "modifiedByStateVersionId": "sv-sc34Fi2C2jQLjtEX",
+        "module": "root",
+        "name": "dataset",
+        "provider": "hashicorp/google",
+        "providerType": "google_bigquery_dataset",
+        "updatedAt": "2021-06-24",
+      },
+    },
+  ],
+  "_type": "tfe_workspace_resource",
+  "address": "google_bigquery_dataset.dataset",
+  "createdAt": 1624492800000,
+  "createdOn": 1624492800000,
+  "displayName": "dataset",
+  "modifiedByStateVersionId": "sv-sc34Fi2C2jQLjtEX",
+  "module": "root",
+  "name": "dataset",
+  "provider": "hashicorp/google",
+  "providerType": "google_bigquery_dataset",
+  "updatedAt": 1624492800000,
+}
+`;
