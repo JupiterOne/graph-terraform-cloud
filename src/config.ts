@@ -10,11 +10,16 @@ import { TerraformCloudClient } from './tfe/client';
 export const instanceConfigFields: IntegrationInstanceConfigFieldMap = {
   apiKey: {
     type: 'string',
+    mask: true,
+  },
+  organizationName: {
+    type: 'string',
   },
 };
 
 export interface IntegrationConfig extends IntegrationInstanceConfig {
   apiKey: string;
+  organizationName: string;
 }
 
 export async function validateInvocation(
@@ -23,8 +28,10 @@ export async function validateInvocation(
   const { instance } = context;
   const { config } = instance;
 
-  if (!config.apiKey) {
-    throw new IntegrationValidationError('Config requires all of {apiKey}');
+  if (!config.apiKey || !config.organizationName) {
+    throw new IntegrationValidationError(
+      'Config requires all of {apiKey, organizationName}',
+    );
   }
 
   const client = new TerraformCloudClient({ apiKey: config.apiKey });

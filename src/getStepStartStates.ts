@@ -32,25 +32,14 @@ export default async function getStepStartStates(
 
   const reducedEntitlementSet = FREE_TIER_ENTITLEMENT;
 
-  // Alternative to this is if we get the organization id/name in the env,
-  // Then we could just use the requestOrganizationEntitlementSet without this iteration
-  const organizations: string[] = [];
-  await client.organizations.iterateOrganizations(async (organization) => {
-    organizations.push(organization.item.id);
+  const entitlementSet =
+    await client.organizations.requestOrganizationEntitlementSet(
+      instance.config.organizationName,
+    );
 
-    return Promise.resolve();
+  Object.keys(reducedEntitlementSet).forEach((key) => {
+    reducedEntitlementSet[key] ||= entitlementSet[key];
   });
-
-  // If we're expecting organization API token, this should only return single organization always
-  if (organizations[0]) {
-    const entitlementSet =
-      await client.organizations.requestOrganizationEntitlementSet(
-        organizations[0],
-      );
-    Object.keys(reducedEntitlementSet).forEach((key) => {
-      reducedEntitlementSet[key] ||= entitlementSet[key];
-    });
-  }
 
   const stepStartStates: StepStartStates = {
     [IntegrationSteps.ACCOUNT]: {

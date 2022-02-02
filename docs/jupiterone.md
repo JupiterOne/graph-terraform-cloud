@@ -31,6 +31,9 @@ If you need help with this integration, please contact
 
 1. Create a Terraform Cloud account.
 2. [Generate a Terraform Cloud authentication token](https://www.terraform.io/cloud-docs/api-docs#authentication).
+3. Enter the generated authentication token in the `API_KEY` field in .env.
+4. Enter the organization name you want the integration to ingest data from in
+   the `ORGANIZATION_NAME` field in .env.
 
 ### In JupiterOne
 

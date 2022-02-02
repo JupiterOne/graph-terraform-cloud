@@ -38,6 +38,11 @@ export async function fetchOrganizations({
   const organizationData: CachedOrganizationData[] = [];
 
   await client.organizations.iterateOrganizations(async ({ item }) => {
+    // Let's only handle the customer specified organization (for now)
+    if (item.id !== config.organizationName) {
+      return;
+    }
+
     const organizationEntity = createOrganizationEntity(item.attributes);
     await jobState.addEntity(organizationEntity);
     organizationData.push({
