@@ -5,7 +5,7 @@ Object {
   "collectedEntities": Array [
     Object {
       "_class": Array [
-        "User",
+        "Account",
       ],
       "_key": "account-user-TSVGDCJGAaCZs8T7",
       "_rawData": Array [

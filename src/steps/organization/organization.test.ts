@@ -25,7 +25,7 @@ describe('#fetchOrganizations', () => {
         {
           _type: Entities.ORGANIZATION._type,
           matcher: {
-            _class: ['Account', 'Organization'],
+            _class: ['Organization'],
             schema: {
               additionalProperties: false,
               properties: {
@@ -39,6 +39,7 @@ describe('#fetchOrganizations', () => {
                 email: { type: 'string' },
                 collaboratorAuthPolicy: { type: 'string' },
                 ownersTeamSamlRoleId: { type: ['string', 'null'] },
+                mfaEnabled: { type: 'boolean' },
                 'permissions.canAccessViaTeams': { type: 'boolean' },
                 'permissions.canCreateModule': { type: 'boolean' },
                 'permissions.canCreateProvider': { type: 'boolean' },
@@ -164,14 +165,6 @@ describe('#fetchOrganizationWorkspaces', () => {
     });
 
     await cacheOrganizationData(context.jobState, [
-      // {
-      //   organizationName: 'austin-test-org',
-      //   organizationExternalId: 'org-Ljx2Ap3vszNhHWWv',
-      // },
-      // {
-      //   organizationName: 'austin-test-org-v2',
-      //   organizationExternalId: 'org-X2NET8eXZP36vxN7',
-      // },
       {
         organizationName: 'jupiterone',
         organizationExternalId: 'org-yMai1ZUhS39WMAU9',
@@ -287,14 +280,6 @@ describe('#fetchOrganizationEntitlementSet', () => {
     });
 
     await cacheOrganizationData(context.jobState, [
-      // {
-      //   organizationName: 'austin-test-org',
-      //   organizationExternalId: 'org-Ljx2Ap3vszNhHWWv',
-      // },
-      // {
-      //   organizationName: 'austin-test-org-v2',
-      //   organizationExternalId: 'org-X2NET8eXZP36vxN7',
-      // },
       {
         organizationName: 'jupiterone',
         organizationExternalId: 'org-yMai1ZUhS39WMAU9',
@@ -368,14 +353,6 @@ describe('#fetchOrganizationTeams', () => {
     });
 
     await cacheOrganizationData(context.jobState, [
-      // {
-      //   organizationName: 'austin-test-org',
-      //   organizationExternalId: 'org-Ljx2Ap3vszNhHWWv',
-      // },
-      // {
-      //   organizationName: 'austin-test-org-v2',
-      //   organizationExternalId: 'org-X2NET8eXZP36vxN7',
-      // },
       {
         organizationName: 'jupiterone',
         organizationExternalId: 'org-yMai1ZUhS39WMAU9',

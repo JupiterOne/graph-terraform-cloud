@@ -758,7 +758,7 @@ Object {
   "collectedEntities": Array [
     Object {
       "_class": Array [
-        "User",
+        "Account",
       ],
       "_key": "account-user-2yZJWZGNJmNsidGK",
       "_rawData": Array [
@@ -801,7 +801,6 @@ Object {
     },
     Object {
       "_class": Array [
-        "Account",
         "Organization",
       ],
       "_key": "org-yMai1ZUhS39WMAU9",

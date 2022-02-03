@@ -3,7 +3,7 @@
 exports[`#createAccountEntity should convert to entity 1`] = `
 Object {
   "_class": Array [
-    "User",
+    "Account",
   ],
   "_key": "account-user-TSVGDCJGAZZZZZZ",
   "_rawData": Array [

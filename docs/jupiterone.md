@@ -76,15 +76,15 @@ https://github.com/JupiterOne/sdk/blob/master/docs/integrations/development.md
 
 The following entities are created:
 
-| Resources       | Entity `_type`           | Entity `_class`           |
-| --------------- | ------------------------ | ------------------------- |
-| Account         | `tfe_account`            | `User`                    |
-| Entitlement Set | `tfe_entitlement_set`    | `Entity`                  |
-| Organization    | `tfe_organization`       | `Account`, `Organization` |
-| Resource        | `tfe_workspace_resource` | `Resource`                |
-| Team            | `tfe_team`               | `Team`                    |
-| User            | `tfe_user`               | `User`                    |
-| Workspace       | `tfe_workspace`          | `Project`                 |
+| Resources       | Entity `_type`           | Entity `_class` |
+| --------------- | ------------------------ | --------------- |
+| Account         | `tfe_account`            | `Account`       |
+| Entitlement Set | `tfe_entitlement_set`    | `Entity`        |
+| Organization    | `tfe_organization`       | `Organization`  |
+| Resource        | `tfe_workspace_resource` | `Resource`      |
+| Team            | `tfe_team`               | `Team`          |
+| User            | `tfe_user`               | `User`          |
+| Workspace       | `tfe_workspace`          | `Project`       |
 
 ### Relationships
 

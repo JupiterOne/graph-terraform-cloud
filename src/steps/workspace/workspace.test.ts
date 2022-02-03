@@ -15,14 +15,6 @@ describe('#fetchWorkspaceResources', () => {
     });
 
     await cacheOrganizationData(context.jobState, [
-      // {
-      //   organizationName: 'austin-test-org',
-      //   organizationExternalId: 'org-Ljx2Ap3vszNhHWWv',
-      // },
-      // {
-      //   organizationName: 'austin-test-org-v2',
-      //   organizationExternalId: 'org-X2NET8eXZP36vxN7',
-      // },
       {
         organizationName: 'jupiterone',
         organizationExternalId: 'org-yMai1ZUhS39WMAU9',

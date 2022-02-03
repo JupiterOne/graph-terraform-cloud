@@ -21,7 +21,7 @@ describe('#fetchAccount', () => {
         {
           _type: Entities.ACCOUNT._type,
           matcher: {
-            _class: ['User'],
+            _class: ['Account'],
             schema: {
               additionalProperties: false,
               properties: {

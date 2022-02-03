@@ -53,7 +53,6 @@ Object {
 exports[`#createOrganizationEntity should convert to entity 1`] = `
 Object {
   "_class": Array [
-    "Account",
     "Organization",
   ],
   "_key": "org-yMai1ZUhS39WMAU9",

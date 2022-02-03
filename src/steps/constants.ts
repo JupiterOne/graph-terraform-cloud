@@ -32,7 +32,7 @@ export const Entities: Record<
 > = {
   ACCOUNT: {
     _type: 'tfe_account',
-    _class: ['User'],
+    _class: ['Account'],
     resourceName: 'Account',
   },
   ENTITLEMENT_SET: {
@@ -42,7 +42,7 @@ export const Entities: Record<
   },
   ORGANIZATION: {
     _type: 'tfe_organization',
-    _class: ['Account', 'Organization'],
+    _class: ['Organization'],
     resourceName: 'Organization',
   },
   TEAM: {
