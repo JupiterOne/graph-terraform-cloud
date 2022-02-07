@@ -4,8 +4,11 @@ import {
 } from './request';
 import {
   CreateOrganizationRequestBodyAttributes,
+  EntitlementSet,
   Organization,
   OrganizationMembership,
+  OrganizationTeam,
+  OrganizationWorkspace,
 } from './types';
 
 export class Organizations extends TerraformCloudClientRequestor {
@@ -47,6 +50,13 @@ export class Organizations extends TerraformCloudClientRequestor {
     return this.listRequest<Organization>({
       method: 'GET',
       path: `/api/v2/organizations`,
+    });
+  }
+
+  async requestOrganizationEntitlementSet(organizationName: string) {
+    return this.request<EntitlementSet>({
+      method: 'GET',
+      path: `/api/v2/organizations/${organizationName}/entitlement-set`,
     });
   }
 
@@ -105,6 +115,36 @@ export class Organizations extends TerraformCloudClientRequestor {
         queryStringParams: {
           include: (included.length && included.join(',')) || undefined,
         },
+      },
+      callback,
+    );
+  }
+
+  async iterateOrganizationWorkspaces(
+    organizationName: string,
+    callback: (
+      organization: IterateListApiDataResponse<OrganizationWorkspace>,
+    ) => Promise<void>,
+  ) {
+    await this.iterateListApiData<OrganizationWorkspace>(
+      {
+        method: 'GET',
+        path: `/api/v2/organizations/${organizationName}/workspaces`,
+      },
+      callback,
+    );
+  }
+
+  async iterateOrganizationTeams(
+    organizationName: string,
+    callback: (
+      organization: IterateListApiDataResponse<OrganizationTeam>,
+    ) => Promise<void>,
+  ) {
+    await this.iterateListApiData<OrganizationTeam>(
+      {
+        method: 'GET',
+        path: `/api/v2/organizations/${organizationName}/teams`,
       },
       callback,
     );

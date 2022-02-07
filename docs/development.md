@@ -1,28 +1,27 @@
 # Development
 
-Add details here to give a brief overview of how to work with the provider APIs.
-Please reference any SDKs or API docs used to help build the integration here.
-
-## Prerequisites
-
-Supply details about software or tooling (like maybe Docker or Terraform) that
-is needed for development here.
-
-Please supply references to documentation that details how to install those
-dependencies here.
-
-Tools like Node.js and NPM are already covered in the [README](../README.md) so
-don't bother documenting that here.
+This integration focuses on [Terraform Cloud](https://www.terraform.io/cloud)
+and is using the
+[Terraform Cloud API](https://www.terraform.io/cloud-docs/api-docs#terraform-cloud-api-documentation)
+for interacting with the Terraform Cloud resources.
 
 ## Provider account setup
 
-Please provide information about the steps needed to create an account with a
-provider. Images and references to a provider's documentation is very helpful
-for new developers picking up your work.
+Reference:
+[Terraform Cloud Get-Started Tutorial](https://learn.hashicorp.com/tutorials/terraform/cloud-sign-up?in=terraform/cloud-get-started)
+
+1. [Sign-up](https://app.terraform.io/signup/account) for a Terraform cloud
+   account.
+2. Select start from scratch and create an organization.
+3. Enter the neccesary details and then click 'Create organization'
+4. If you need a workspace, create a workspace.
 
 ## Authentication
 
-Supply details here for information on how to authenticate with a provider so
-that developers have an idea of what's needed to hit APIs. It may be useful to
-provide explanations for each value specified in
-[../src/instanceConfigFields.json](../src/instanceConfigFields.json).
+To start the integration, we need to provide an API Authentication token to our
+integration.
+[Generate organization token](https://www.terraform.io/cloud-docs/api-docs#authentication)
+and provide it to your `.env`. Once that's done, you should now be able to start
+contributing to this integration. The integration will pull in the `API_KEY` and
+`ORGANIZATION_NAME` variables from the `.env` file and use them when making
+requests.

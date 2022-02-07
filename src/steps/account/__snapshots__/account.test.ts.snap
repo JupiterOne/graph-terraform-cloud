@@ -1,0 +1,57 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`#fetchAccount should collect data: jobState 1`] = `
+Object {
+  "collectedEntities": Array [
+    Object {
+      "_class": Array [
+        "Account",
+      ],
+      "_key": "account-user-TSVGDCJGAaCZs8T7",
+      "_rawData": Array [
+        Object {
+          "name": "default",
+          "rawData": Object {
+            "avatarUrl": "https://www.gravatar.com/avatar/c726702df6456d9affb1eb8d9d37a9de?s=100&d=mm",
+            "email": "api-org-jupiterone-hxjbgnd3bo@hashicorp.com",
+            "enterpriseSupport": false,
+            "hasGitHubAppToken": false,
+            "id": "user-TSVGDCJGAaCZs8T7",
+            "isConfirmed": true,
+            "isServiceAccount": true,
+            "isSiteAdmin": false,
+            "isSsoLogin": false,
+            "isSudo": false,
+            "password": null,
+            "permissions": Object {
+              "canChangeEmail": true,
+              "canChangeUsername": true,
+              "canCreateOrganizations": false,
+              "canManageUserTokens": false,
+            },
+            "twoFactor": Object {
+              "enabled": false,
+              "verified": false,
+            },
+            "unconfirmedEmail": null,
+            "username": "api-org-jupiterone-HXJbgND3Bo",
+          },
+        },
+      ],
+      "_type": "tfe_account",
+      "createdOn": undefined,
+      "displayName": "api-org-jupiterone-HXJbgND3Bo",
+      "email": "api-org-jupiterone-hxjbgnd3bo@hashicorp.com",
+      "id": "user-TSVGDCJGAaCZs8T7",
+      "name": "api-org-jupiterone-HXJbgND3Bo",
+      "username": "api-org-jupiterone-HXJbgND3Bo",
+    },
+  ],
+  "collectedRelationships": Array [],
+  "encounteredTypes": Array [
+    "tfe_account",
+  ],
+  "numCollectedEntities": 1,
+  "numCollectedRelationships": 0,
+}
+`;
