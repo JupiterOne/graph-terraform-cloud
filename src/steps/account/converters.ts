@@ -1,8 +1,11 @@
-import { createIntegrationEntity } from '@jupiterone/integration-sdk-core';
+import {
+  createIntegrationEntity,
+  Entity,
+} from '@jupiterone/integration-sdk-core';
 import { User } from '../../tfe/types';
 import { Entities } from '../constants';
 
-export function createAccountEntity(data: User) {
+export function createAccountEntity(data: User): Entity {
   return createIntegrationEntity({
     entityData: {
       source: data,

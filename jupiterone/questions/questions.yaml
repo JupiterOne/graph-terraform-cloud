@@ -1,0 +1,4 @@
+---
+sourceId: managed:template
+integrationDefinitionId: '${integration_definition_id}'
+questions: []
