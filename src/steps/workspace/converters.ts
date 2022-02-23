@@ -1,5 +1,6 @@
 import {
   createIntegrationEntity,
+  Entity,
   parseTimePropertyValue,
 } from '@jupiterone/integration-sdk-core';
 import { WorkspaceResource } from '../../tfe/types';
@@ -8,7 +9,7 @@ import { Entities } from '../constants';
 export function createWorkspaceResourceEntity(
   resourceId: string,
   data: WorkspaceResource,
-) {
+): Entity {
   return createIntegrationEntity({
     entityData: {
       source: data,
