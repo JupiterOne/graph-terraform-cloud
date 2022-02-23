@@ -70,6 +70,7 @@ export function createOrganizationMemberEntity({
         mfaEnabled: userData.twoFactor.enabled,
         mfaVerified: userData.twoFactor.verified,
         email: userData.email,
+        active: true,
         ...(userData.permissions &&
           prefixObjProperties('permissions', userData.permissions)),
       },

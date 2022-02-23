@@ -183,6 +183,7 @@ Object {
     },
   ],
   "_type": "tfe_user",
+  "active": true,
   "avatarUrl": "https://www.gravatar.com/avatar/c726702df6456d9affb1eb8d9d37a9de?s=100&d=mm",
   "createdOn": undefined,
   "displayName": "api-org-test",
