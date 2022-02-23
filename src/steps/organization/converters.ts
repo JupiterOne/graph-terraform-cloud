@@ -1,6 +1,5 @@
 import {
   createIntegrationEntity,
-  Entity,
   parseTimePropertyValue,
 } from '@jupiterone/integration-sdk-core';
 import {
@@ -17,7 +16,7 @@ export function generateEntitlementSetKey(organizationName: string): string {
   return `entitlement-set-${organizationName}`;
 }
 
-export function createOrganizationEntity(data: Organization): Entity {
+export function createOrganizationEntity(data: Organization) {
   return createIntegrationEntity({
     entityData: {
       source: data,
@@ -55,7 +54,7 @@ export function createOrganizationMemberEntity({
 }: {
   userId: string;
   userData: User;
-}): Entity {
+}) {
   return createIntegrationEntity({
     entityData: {
       source: userData,
@@ -82,7 +81,7 @@ export function createOrganizationMemberEntity({
 export function createOrganizationWorkspaceEntity(
   workspaceId: string,
   data: OrganizationWorkspace,
-): Entity {
+) {
   return createIntegrationEntity({
     entityData: {
       source: data,
@@ -139,7 +138,7 @@ export function createOrganizationWorkspaceEntity(
 export function createOrganizationTeamEntity(
   teamId: string,
   data: OrganizationTeam,
-): Entity {
+) {
   return createIntegrationEntity({
     entityData: {
       source: data,
@@ -168,7 +167,7 @@ export function createOrganizationTeamEntity(
 export function createOrganizationEntitlementSetEntity(
   organizationId: string,
   data: EntitlementSet,
-): Entity {
+) {
   return createIntegrationEntity({
     entityData: {
       source: data,
