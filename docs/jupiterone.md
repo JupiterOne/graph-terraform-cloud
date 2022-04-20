@@ -1,4 +1,4 @@
-# Integration with JupiterOne
+# Terraform Cloud Integration with JupiterOne
 
 ## Terraform Cloud + JupiterOne Integration Benefits
 
