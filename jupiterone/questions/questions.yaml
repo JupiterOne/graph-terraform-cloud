@@ -2,10 +2,10 @@
 sourceId: managed:terraform
 integrationDefinitionId: '${integration_definition_id}'
 questions: 
-- id: integration-question-terraform-user-with-mfa-disabled-and-mfa-unverified-within-the-organization
-  title: Which Terraform users do not have MFA enabled and MFA is not verified within the organization? 
+- id: integration-question-terraform-user-with-mfa-disabled-and-mfa-is-not-verified
+  title: Which Terraform users do not have MFA enabled and MFA is not verified? 
   description:
-    Identify Terraform users that do not have MFA enabled within an unverified Terraform organization.
+    Identify Terraform users that do not have MFA enabled and mfa is not verified.
   queries:
   - name: bad
     query: |
