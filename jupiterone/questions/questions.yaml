@@ -14,4 +14,3 @@ questions:
         user.displayName,user.mfaEnabled,user.mfaVerified    
   tags:
   - terraform-cloud
-  - workspace
