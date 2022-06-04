@@ -2,16 +2,15 @@
 sourceId: managed:terraform
 integrationDefinitionId: '${integration_definition_id}'
 questions: 
-- id: integration-question-terraform-cloud-user-that-is-not-mfa-enabled-and-mfa-is-not-verified-within-an-organization-workspace
-  title: Which Terraform Cloud users do not have MFA enabled and where MFA is not verified within an organization workspace? 
+- id: integration-question-terraform-cloud-user-that-is-not-mfa-enabled-and-mfa-is-not-verified
+  title: Which Terraform Cloud users do not have MFA enabled and MFA is not verified?
   description:
-    Identify Terraform Cloud users that do not have MFA enabled and where MFA is not verified in an organization workspace.
-  queries:
-  - name: bad
+    Identify Terraform Cloud users that do not have MFA enabled and where MFA is not verified.
+  queries: 
+  - name: bad 
     query: |
-      FIND tfe_user AS user THAT HAS tfe_organization
+      FIND tfe_user AS user 
       RETURN
         user.displayName,user.mfaEnabled,user.mfaVerified    
   tags:
   - terraform-cloud
-  - workspace
