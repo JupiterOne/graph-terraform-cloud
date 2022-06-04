@@ -5,7 +5,7 @@ questions:
 - id: integration-question-terraform-cloud-user-that-is-not-mfa-enabled-and-mfa-is-not-verified
   title: Which Terraform Cloud users do not have MFA enabled and MFA is not verified?
   description:
-    Identify Terraform Cloud users that do not have MFA enabled and where MFA is not verified.
+    Identify Terraform Cloud users that do not have MFA enabled and MFA is not verified.
   queries: 
   - name: bad 
     query: |
