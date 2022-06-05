@@ -3,7 +3,7 @@ sourceId: managed:terraform
 integrationDefinitionId: '${integration_definition_id}'
 questions: 
 - id: integration-question-terraform-cloud-user-that-do-not-use-mfa
-  title: Which Terraform Cloud users do not have MFA enabled and where MFA is not verified?
+  title: Which Terraform Cloud users do not have mfa enabled and where mfa is not verified?
   description:
     Find Terraform Cloud users that do not have mfa enabled and mfa verified properties in use.
   queries: 
