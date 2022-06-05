@@ -11,6 +11,6 @@ questions:
     query: |
       FIND tfe_user AS user 
       RETURN
-        user.displayName,user.mfaEnabled,user.mfaVerified    
+      user.displayName,user.mfaEnabled,user.mfaVerified    
   tags:
   - terraform-cloud
