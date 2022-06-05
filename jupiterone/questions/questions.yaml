@@ -5,7 +5,7 @@ questions:
 - id: integration-question-terraform-cloud-user-that-do-not-use-mfa
   title: Which Terraform Cloud users do not use mfa enabled nor mfa verified?
   description:
-    Find Terraform Cloud users that do not use mfa enabled and mfa verified.
+    Find Terraform Cloud users that do not have mfa enabled and mfa verified.
   queries: 
   - name: bad 
     query: |
