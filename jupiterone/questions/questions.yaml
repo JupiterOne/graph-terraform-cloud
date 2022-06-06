@@ -3,9 +3,9 @@ sourceId: managed:terraform
 integrationDefinitionId: '${integration_definition_id}'
 questions: 
 - id: integration-question-terraform-cloud-users-with-no-multi-factor-authentication
-  title: Returns a list of Terraform Cloud users that do not use MFA working independently or within a Terraform team workspace?
+  title: Returns a list of Terraform Cloud users that do not use MFA in a Terraform team workspace or as an individual contributor?
   description:
-    Find Terraform Cloud users that do not use mfa when accessing a Terraform team workspace or when working independently.
+    Find Terraform Cloud users that do not use mfa when accessing a Terraform team workspace or for individual usage.
   queries: 
   - name: bad 
     query: |
