@@ -9,10 +9,8 @@ questions:
   queries: 
   - name: bad 
     query: |
-      FIND tfe_user AS user
-        THAT HAS tfe_organization AS org 
-      RETURN
-      user.displayName,user.mfaEnabled,user.mfaVerified,org.mfaEnabled    
+      FIND tfe_user WITH mfaEnabled != true AND mfaVerified != true
+        THAT HAS tfe_organization WITH mfaEnabled != true     
   tags:
   - terraform-cloud
   - workspace
