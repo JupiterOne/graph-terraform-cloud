@@ -1,4 +1,16 @@
 ---
-sourceId: managed:template
+sourceId: managed:terraform
 integrationDefinitionId: '${integration_definition_id}'
-questions: []
+questions: 
+- id: integration-question-terraform-cloud-users-with-no-multi-factor-authentication
+  title: Are there any Terraform users that do not use MFA in a Terraform team workspace or as an individual contributor?
+  description:
+    Identify Terraform Cloud users that do not use mfa in a Terraform team workspace or as an individual contributor.
+  queries: 
+  - name: bad 
+    query: |
+      FIND tfe_user WITH mfaEnabled != true AND mfaVerified != true
+        THAT HAS tfe_organization WITH mfaEnabled != true          
+  tags:
+  - terraform-cloud
+  - workspace
